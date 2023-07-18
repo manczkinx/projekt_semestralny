@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+    <EntitySetMapping Name="Competitions">
+      <EntityTypeMapping TypeName="DatabaseModel.Competitions">
+        <MappingFragment StoreEntitySet="Competitions">
+          <ScalarProperty Name="Cut" ColumnName="Cut" />
+          <ScalarProperty Name="CompetitionName" ColumnName="CompetitionName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="DatabaseModel.Players">
+        <MappingFragment StoreEntitySet="Players">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+          <ScalarProperty Name="PlayerSecondname" ColumnName="PlayerSecondname" />
+          <ScalarProperty Name="Club" ColumnName="Club" />
+          <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Score">
+      <EntityTypeMapping TypeName="DatabaseModel.Score">
+        <MappingFragment StoreEntitySet="Score">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Turnament" ColumnName="Turnament" />
+          <ScalarProperty Name="Competition" ColumnName="Competition" />
+          <ScalarProperty Name="Player" ColumnName="Player" />
+          <ScalarProperty Name="PlayerScore" ColumnName="PlayerScore" />
+          <ScalarProperty Name="X" ColumnName="X" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="FinalScore" ColumnName="FinalScore" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Turnament">
+      <EntityTypeMapping TypeName="DatabaseModel.Turnament">
+        <MappingFragment StoreEntitySet="Turnament">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TurnamentName" ColumnName="TurnamentName" />
+          <ScalarProperty Name="TurnamentDate" ColumnName="TurnamentDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

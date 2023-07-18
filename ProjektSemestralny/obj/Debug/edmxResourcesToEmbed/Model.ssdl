@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Competitions">
+    <Key>
+      <PropertyRef Name="Cut" />
+    </Key>
+    <Property Name="Cut" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="CompetitionName" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Players">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlayerName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PlayerSecondname" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Club" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="LicenseNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="25" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Score">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Turnament" Type="int" Nullable="false" />
+    <Property Name="Competition" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Player" Type="int" Nullable="false" />
+    <Property Name="PlayerScore" Type="int" Nullable="false" />
+    <Property Name="X" Type="int" />
+    <Property Name="Time" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="FinalScore" Type="decimal" Precision="10" Scale="5" />
+  </EntityType>
+  <EntityType Name="Turnament">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TurnamentName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TurnamentDate" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Competitions">
+    <End Role="Competitions" Type="Self.Competitions" Multiplicity="1" />
+    <End Role="Score" Type="Self.Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competitions">
+        <PropertyRef Name="Cut" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="Competition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Players">
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Score" Type="Self.Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="Player" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Turnament">
+    <End Role="Turnament" Type="Self.Turnament" Multiplicity="1" />
+    <End Role="Score" Type="Self.Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Turnament">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="Turnament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DatabaseModelStoreContainer">
+    <EntitySet Name="Competitions" EntityType="Self.Competitions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Players" EntityType="Self.Players" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Score" EntityType="Self.Score" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Turnament" EntityType="Self.Turnament" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Competitions" Association="Self.FK_Competitions">
+      <End Role="Competitions" EntitySet="Competitions" />
+      <End Role="Score" EntitySet="Score" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Players" Association="Self.FK_Players">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Score" EntitySet="Score" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Turnament" Association="Self.FK_Turnament">
+      <End Role="Turnament" EntitySet="Turnament" />
+      <End Role="Score" EntitySet="Score" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

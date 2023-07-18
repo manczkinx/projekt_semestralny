@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Competitions">
+    <Key>
+      <PropertyRef Name="Cut" />
+    </Key>
+    <Property Name="Cut" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CompetitionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Score" Relationship="Self.FK_Competitions" FromRole="Competitions" ToRole="Score" />
+  </EntityType>
+  <EntityType Name="Players">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlayerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PlayerSecondname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Club" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LicenseNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Score" Relationship="Self.FK_Players" FromRole="Players" ToRole="Score" />
+  </EntityType>
+  <EntityType Name="Score">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Turnament" Type="Int32" Nullable="false" />
+    <Property Name="Competition" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Player" Type="Int32" Nullable="false" />
+    <Property Name="PlayerScore" Type="Int32" Nullable="false" />
+    <Property Name="X" Type="Int32" />
+    <Property Name="Time" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="FinalScore" Type="Decimal" Precision="10" Scale="5" />
+    <NavigationProperty Name="Competitions" Relationship="Self.FK_Competitions" FromRole="Score" ToRole="Competitions" />
+    <NavigationProperty Name="Players" Relationship="Self.FK_Players" FromRole="Score" ToRole="Players" />
+    <NavigationProperty Name="Turnament1" Relationship="Self.FK_Turnament" FromRole="Score" ToRole="Turnament" />
+  </EntityType>
+  <EntityType Name="Turnament">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TurnamentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TurnamentDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Score" Relationship="Self.FK_Turnament" FromRole="Turnament" ToRole="Score" />
+  </EntityType>
+  <Association Name="FK_Competitions">
+    <End Role="Competitions" Type="Self.Competitions" Multiplicity="1" />
+    <End Role="Score" Type="Self.Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competitions">
+        <PropertyRef Name="Cut" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="Competition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Players">
+    <End Role="Players" Type="Self.Players" Multiplicity="1" />
+    <End Role="Score" Type="Self.Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="Player" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Turnament">
+    <End Role="Turnament" Type="Self.Turnament" Multiplicity="1" />
+    <End Role="Score" Type="Self.Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Turnament">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Score">
+        <PropertyRef Name="Turnament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Competitions" EntityType="Self.Competitions" />
+    <EntitySet Name="Players" EntityType="Self.Players" />
+    <EntitySet Name="Score" EntityType="Self.Score" />
+    <EntitySet Name="Turnament" EntityType="Self.Turnament" />
+    <AssociationSet Name="FK_Competitions" Association="Self.FK_Competitions">
+      <End Role="Competitions" EntitySet="Competitions" />
+      <End Role="Score" EntitySet="Score" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Players" Association="Self.FK_Players">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Score" EntitySet="Score" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Turnament" Association="Self.FK_Turnament">
+      <End Role="Turnament" EntitySet="Turnament" />
+      <End Role="Score" EntitySet="Score" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
